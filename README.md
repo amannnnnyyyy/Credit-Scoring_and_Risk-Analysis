@@ -46,6 +46,6 @@ To set up the project on your local machine, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/amannnnnyyyy/Credit-Scoring_and_Risk-Analysis.git
-   cd credit-scoring-model
+   cd Credit-Scoring_and_Risk-Analysis
 
 2. pip install -r requirements.txt
