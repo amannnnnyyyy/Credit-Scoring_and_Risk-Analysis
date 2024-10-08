@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Scoring Prediction</title>
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+            const jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the response in a popup
+                alert('Model: ' + JSON.stringify(data.model)+'\n\n'+data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Credit Scoring Prediction</h1>
+    <form id="predictionForm" onsubmit="submitForm(event)">
+        <label for="TotalRFMS">Total RFMS:</label><br>
+        <input type="number" step="0.01" name="TotalRFMS" value="0.0" required><br><br>
+
+        <label for="ProviderId_ProviderId_2">ProviderId_ProviderId_2:</label><br>
+        <input type="number" step="0.01" name="ProviderId_ProviderId_2" value="0.0" required><br><br>
+
+        <label for="ProviderId_ProviderId_3">ProviderId_ProviderId_3:</label><br>
+        <input type="number" step="0.01" name="ProviderId_ProviderId_3" value="0.0" required><br><br>
+
+        <label for="ProviderId_ProviderId_4">ProviderId_ProviderId_4:</label><br>
+        <input type="number" step="0.01" name="ProviderId_ProviderId_4" value="0.0" required><br><br>
+
+        <label for="ProviderId_ProviderId_5">ProviderId_ProviderId_5:</label><br>
+        <input type="number" step="0.01" name="ProviderId_ProviderId_5" value="0.0" required><br><br>
+
+        <label for="ProviderId_ProviderId_6">ProviderId_ProviderId_6:</label><br>
+        <input type="number" step="0.01" name="ProviderId_ProviderId_6" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_10">ProductId_ProductId_10:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_10" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_11">ProductId_ProductId_11:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_11" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_12">ProductId_ProductId_12:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_12" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_13">ProductId_ProductId_13:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_13" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_14">ProductId_ProductId_14:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_14" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_15">ProductId_ProductId_15:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_15" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_16">ProductId_ProductId_16:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_16" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_19">ProductId_ProductId_19:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_19" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_2">ProductId_ProductId_2:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_2" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_20">ProductId_ProductId_20:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_20" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_21">ProductId_ProductId_21:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_21" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_22">ProductId_ProductId_22:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_22" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_23">ProductId_ProductId_23:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_23" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_24">ProductId_ProductId_24:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_24" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_27">ProductId_ProductId_27:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_27" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_3">ProductId_ProductId_3:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_3" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_4">ProductId_ProductId_4:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_4" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_5">ProductId_ProductId_5:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_5" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_6">ProductId_ProductId_6:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_6" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_7">ProductId_ProductId_7:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_7" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_8">ProductId_ProductId_8:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_8" value="0.0" required><br><br>
+
+        <label for="ProductId_ProductId_9">ProductId_ProductId_9:</label><br>
+        <input type="number" step="0.01" name="ProductId_ProductId_9" value="0.0" required><br><br>
+
+        <label for="ProductCategory_data_bundles">ProductCategory_data_bundles:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_data_bundles" value="0.0" required><br><br>
+
+        <label for="ProductCategory_financial_services">ProductCategory_financial_services:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_financial_services" value="0.0" required><br><br>
+
+        <label for="ProductCategory_movies">ProductCategory_movies:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_movies" value="0.0" required><br><br>
+
+        <label for="ProductCategory_other">ProductCategory_other:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_other" value="0.0" required><br><br>
+
+        <label for="ProductCategory_ticket">ProductCategory_ticket:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_ticket" value="0.0" required><br><br>
+
+        <label for="ProductCategory_transport">ProductCategory_transport:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_transport" value="0.0" required><br><br>
+
+        <label for="ProductCategory_tv">ProductCategory_tv:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_tv" value="0.0" required><br><br>
+
+        <label for="ProductCategory_utility_bill">ProductCategory_utility_bill:</label><br>
+        <input type="number" step="0.01" name="ProductCategory_utility_bill" value="0.0" required><br><br>
+
+        <label for="ChannelId_ChannelId_2">ChannelId_ChannelId_2:</label><br>
+        <input type="number" step="0.01" name="ChannelId_ChannelId_2" value="0.0" required><br><br>
+
+        <label for="ChannelId_ChannelId_3">ChannelId_ChannelId_3:</label><br>
+        <input type="number" step="0.01" name="ChannelId_ChannelId_3" value="0.0" required><br><br>
+
+        <label for="ChannelId_ChannelId_5">ChannelId_ChannelId_5:</label><br>
+        <input type="number" step="0.01" name="ChannelId_ChannelId_5" value="0.0" required><br><br>
+
+        <label for="CountryCode">Country Code:</label><br>
+        <input type="number" step="0.01" name="CountryCode" value="0.0" required><br><br>
+
+        <label for="Amount">Amount:</label><br>
+        <input type="number" step="0.01" name="Amount" value="0.0" required><br><br>
+
+        <label for="Value">Value:</label><br>
+        <input type="number" step="0.01" name="Value" value="0.0" required><br><br>
+
+        <label for="PricingStrategy">Pricing Strategy:</label><br>
+        <input type="number" step="0.01" name="PricingStrategy" value="0.0" required><br><br>
+
+        <label for="FraudResult">Fraud Result:</label><br>
+        <input type="number" step="0.01" name="FraudResult" value="0.0" required><br><br>
+
+        <label for="Total_Transaction_Amount">Total Transaction Amount:</label><br>
+        <input type="number" step="0.01" name="Total_Transaction_Amount" value="0.0" required><br><br>
+
+        <label for="Average_Transaction_Amount">Average Transaction Amount:</label><br>
+        <input type="number" step="0.01" name="Average_Transaction_Amount" value="0.0" required><br><br>
+
+        <label for="Transaction_Count">Transaction Count:</label><br>
+        <input type="number" step="0.01" name="Transaction_Count" value="0.0" required><br><br>
+
+        <label for="Std_Deviation_Transaction_Amount">Std Deviation Transaction Amount:</label><br>
+        <input type="number" step="0.01" name="Std_Deviation_Transaction_Amount" value="0.0" required><br><br>
+
+        <label for="Transaction_Hour">Transaction Hour:</label><br>
+        <input type="number" step="0.01" name="Transaction_Hour" value="0.0" required><br><br>
+
+        <label for="Transaction_Day">Transaction Day:</label><br>
+        <input type="number" step="0.01" name="Transaction_Day" value="0.0" required><br><br>
+
+        <label for="Transaction_Month">Transaction Month:</label><br>
+        <input type="number" step="0.01" name="Transaction_Month" value="0.0" required><br><br>
+
+        <label for="Transaction_Year">Transaction Year:</label><br>
+        <input type="number" step="0.01" name="Transaction_Year" value="0.0" required><br><br>
+
+        <label for="model_name">Model Name:</label><br>
+        <select name="model_name" required>
+            <option value="logistic_regression">Logistic Regression</option>
+            <option value="random_forest">Random Forest</option>
+            <option value="decision_tree">Decision Tree</option>
+            <option value="gradient_boosting">Gradient Boosting</option>
+        </select><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>

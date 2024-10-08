@@ -1,8 +1,11 @@
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load the trained models using absolute paths
@@ -72,22 +75,16 @@ class InputData(BaseModel):
     Transaction_Year: float
     model_name: str 
 
-@app.get('/')
-def read_root():
-    return """
-    <html>
-        <head>
-            <title>Credit Scoring Model API</title>
-        </head>
-        <body>
-            <h1>Welcome to the Credit Scoring Model API</h1>
-            <p>Use the button below to navigate to the prediction section.</p>
-            <a href="/docs">
-                <button style="padding: 10px 20px; font-size: 16px;">Go to Prediction</button>
-            </a>
-        </body>
-    </html>
-    """
+# Mount static files (like HTML)
+app.mount("/static", StaticFiles(directory="."), name="static")
+
+
+# Define the root route to serve the HTML form
+@app.get("/", response_class=HTMLResponse)
+async def read_form():
+    with open("index.html") as f:
+        return HTMLResponse(content=f.read())
+
 # Define the prediction endpoint
 @app.post('/predict')
 def predict(input_data: InputData):
@@ -111,7 +108,6 @@ def predict(input_data: InputData):
         else:
             message = f"The customer is not likely to default based on the provided information. Probability of default: {probab_perc}%."
 
-
         return {
             'model': input_data.model_name,
             'prediction': int(prediction[0]),
@@ -120,5 +116,3 @@ def predict(input_data: InputData):
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-
