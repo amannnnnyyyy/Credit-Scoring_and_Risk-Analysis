@@ -2,15 +2,15 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import sys
-sys.path.append('../')
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load the trained models
+# Load the trained models using absolute paths
 models = {
-    'logistic_regression': joblib.load('../notebooks/model/logistic_regression_model.pkl'),
-    'random_forest': joblib.load('../notebooks/model/random_forest_model.pkl'),
-    'decision_tree': joblib.load('../notebooks/model/decision_tree_model.pkl'),
-    'gradient_boosting': joblib.load('../notebooks/model/gradient_boosting_model.pkl')
+    'logistic_regression': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/logistic_regression_model.pkl')),
+    'random_forest': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/random_forest_model.pkl')),
+    'decision_tree': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/decision_tree_model.pkl')),
+    'gradient_boosting': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/gradient_boosting_model.pkl'))
 }
 
 # Create a FastAPI instance
