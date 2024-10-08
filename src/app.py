@@ -1,5 +1,3 @@
-# app.py
-
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
@@ -59,7 +57,7 @@ class InputData(BaseModel):
     ChannelId_ChannelId_2: float
     ChannelId_ChannelId_3: float
     ChannelId_ChannelId_5: float
-    CountryCode: float  # Change to str if it's categorical
+    CountryCode: float 
     Amount: float
     Value: float
     PricingStrategy: float
@@ -72,7 +70,7 @@ class InputData(BaseModel):
     Transaction_Day: float
     Transaction_Month: float
     Transaction_Year: float
-    model_name: str  # Field for model selection
+    model_name: str 
 
 # Define the prediction endpoint
 @app.post('/predict')
