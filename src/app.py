@@ -72,6 +72,22 @@ class InputData(BaseModel):
     Transaction_Year: float
     model_name: str 
 
+@app.get('/')
+def read_root():
+    return """
+    <html>
+        <head>
+            <title>Credit Scoring Model API</title>
+        </head>
+        <body>
+            <h1>Welcome to the Credit Scoring Model API</h1>
+            <p>Use the button below to navigate to the prediction section.</p>
+            <a href="/docs">
+                <button style="padding: 10px 20px; font-size: 16px;">Go to Prediction</button>
+            </a>
+        </body>
+    </html>
+    """
 # Define the prediction endpoint
 @app.post('/predict')
 def predict(input_data: InputData):
