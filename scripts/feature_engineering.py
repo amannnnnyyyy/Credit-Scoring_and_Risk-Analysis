@@ -27,36 +27,50 @@ def time_correction(data):
 
 
 def one_hot_encoder(data):
+    # Initialize the OneHotEncoder
     encoder = OneHotEncoder(drop='first', dtype=int)
 
-    # Select categorical columns for encoding
-    categorical_columns = ['ProductCategory', 'ChannelId', 'CurrencyCode']
+    # Identify ID columns to exclude
+    id_columns = ['TransactionStartTime', 'TransactionId', 'AccountId', 'CustomerId', 'BatchId', 'SubscriptionId']
 
-    # Fit and transform the data
+    # Identify numerical columns to retain
+    numerical_columns = data.select_dtypes(include=['number']).columns.tolist()
+
+    # Identify categorical columns excluding ID columns
+    categorical_columns = data.select_dtypes(include=['object']).columns.tolist()
+    categorical_columns = [col for col in categorical_columns if col not in id_columns]
+
+    # Check if categorical columns are present
+    if not categorical_columns:
+        print("No categorical columns found for encoding.")
+        return data
+
+    # Fit and transform the categorical columns
     encoded_features = encoder.fit_transform(data[categorical_columns])
 
-    # Check the shape of encoded_features
     print(f"Shape of encoded features: {encoded_features.shape}")
 
     # Create a DataFrame from the encoded features
-    # Ensure to use get_feature_names_out() correctly
     encoded_df = pd.DataFrame(encoded_features.toarray(), 
-                            columns=encoder.get_feature_names_out(categorical_columns))
+                               columns=encoder.get_feature_names_out(categorical_columns))
 
-    # Concatenate the original DataFrame with the new encoded DataFrame
-    df_encoded = pd.concat([data.reset_index(drop=True), encoded_df.reset_index(drop=True)], axis=1)
+    # Concatenate the original data (including ID columns and numerical columns) with the encoded features
+    df_encoded = pd.concat([data[id_columns].reset_index(drop=True), 
+                            encoded_df.reset_index(drop=True), 
+                            data[numerical_columns].reset_index(drop=True)], 
+                           axis=1)
 
-    # Drop original categorical columns if no longer needed
-    df_encoded.drop(columns=categorical_columns, inplace=True)
+    # Drop original categorical columns only if they exist
+    for col in categorical_columns:
+        if col in df_encoded.columns:
+            df_encoded.drop(columns=col, inplace=True)
 
     return df_encoded
 
 
 def label_encoder(data):
-    # Create a LabelEncoder object
     label_encoder = LabelEncoder()
 
-    # Encode categorical variables
     data['ProductCategory_Label'] = label_encoder.fit_transform(data['ProductCategory'])
     data['ChannelId_Label'] = label_encoder.fit_transform(data['ChannelId'])
     data['CurrencyCode_Label'] = label_encoder.fit_transform(data['CurrencyCode'])
@@ -98,3 +112,9 @@ def Standardize(data,numerical_columns):
     df_standardized = data.copy()  # Create a copy to avoid modifying the original DataFrame
     df_standardized[numerical_columns] = standard_scaler.fit_transform(data[numerical_columns])
     return df_standardized
+
+def handle_missing_values(df):
+    for col in df.select_dtypes(include=['float64', 'int64']):
+        df[col].fillna(df[col].mean(), inplace=True)
+    for col in df.select_dtypes(include=['object']):
+        df[col].fillna(df[col].mode()[0], inplace=True)
