@@ -13,4 +13,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Print a string
-        run: echo "Github Actions section is not done yet, I am working on it!"
+        run: echo "Github Actions section is not done yet, I am working on it!!"
