@@ -27,7 +27,23 @@ def prepare_for_model(data):
               'Amount', 'Value', 'PricingStrategy', 'FraudResult', 'Total_Transaction_Amount',
               'Average_Transaction_Amount', 'Transaction_Count', 'Std_Deviation_Transaction_Amount', 'Transaction_Hour',
               'Transaction_Day', 'Transaction_Month', 'Transaction_Year']]
-    # X = data[['Combined_WoE','TotalRFMS']]
+    
+    X = data[['TotalRFMS', 'ProviderId_ProviderId_2', 'ProviderId_ProviderId_3',
+              'ProviderId_ProviderId_4', 'ProviderId_ProviderId_5', 'ProviderId_ProviderId_6',
+              'ProductId_ProductId_10', 'ProductId_ProductId_11', 'ProductId_ProductId_12',
+              'ProductId_ProductId_13', 'ProductId_ProductId_14', 'ProductId_ProductId_15',
+              'ProductId_ProductId_16', 'ProductId_ProductId_19', 'ProductId_ProductId_2',
+              'ProductId_ProductId_20', 'ProductId_ProductId_21', 'ProductId_ProductId_22',
+              'ProductId_ProductId_23', 'ProductId_ProductId_24', 'ProductId_ProductId_27',
+              'ProductId_ProductId_3', 'ProductId_ProductId_4', 'ProductId_ProductId_5',
+              'ProductId_ProductId_6', 'ProductId_ProductId_7', 'ProductId_ProductId_8',
+              'ProductId_ProductId_9', 'ProductCategory_data_bundles', 'ProductCategory_financial_services',
+              'ProductCategory_movies', 'ProductCategory_other', 'ProductCategory_ticket',
+              'ProductCategory_transport', 'ProductCategory_tv', 'ProductCategory_utility_bill',
+              'ChannelId_ChannelId_2', 'ChannelId_ChannelId_3', 'ChannelId_ChannelId_5', 'CountryCode',
+              'Amount', 'Value', 'PricingStrategy', 'FraudResult', 'Total_Transaction_Amount',
+              'Average_Transaction_Amount', 'Transaction_Count', 'Transaction_Hour',
+              'Transaction_Day', 'Transaction_Month', 'Transaction_Year']]
     y = data['RiskCategory'].map({'Good': 0, 'Bad': 1})  # Binary mapping for classification
 
     # Split the dataset

@@ -122,3 +122,10 @@ def correlation_analysis(dataframe):
     sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True, cbar=True)
     plt.title('Correlation Matrix', fontsize=16)
     plt.show()
+
+def plot_confusion_matrix(cm):
+    sns.heatmap(cm, annot=True, fmt='d')
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.title('Confusion Matrix - Random Forest')
+    plt.show()
