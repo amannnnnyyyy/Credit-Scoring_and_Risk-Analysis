@@ -4,6 +4,9 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import KNNImputer
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import sys
+sys.path.append('../')
+from scripts.calculations import *
 
 
 def aggregate_features(data,by):
@@ -118,3 +121,30 @@ def handle_missing_values(df):
         df[col].fillna(df[col].mean(), inplace=True)
     for col in df.select_dtypes(include=['object']):
         df[col].fillna(df[col].mode()[0], inplace=True)
+
+def combine_rfms(df, customer_id_col):
+    recency = calculate_recency(df, customer_id_col, 'TransactionStartTime')
+    frequency = calculate_frequency(df, customer_id_col, 'TransactionId')
+    monetary = calculate_monetary(df, customer_id_col, 'Amount')
+    seasonality = calculate_seasonality(df, customer_id_col, 'TransactionStartTime')
+
+    rfms_df = pd.DataFrame({
+        'Recency': recency,
+        'Frequency': frequency,
+        'Monetary': monetary,
+        'Seasonality': seasonality
+    }).fillna(0)  # Fill NaN values with 0 for customers with no transactions
+    return rfms_df
+
+def classify_customers_by_rfms(rfms_df):
+    # Define thresholds using quantiles or other domain-specific rules
+    rfms_df['RiskScore'] = (
+        0.4 * pd.qcut(rfms_df['Recency'], 5, labels=False, duplicates='drop') +  # Recent transactions are better
+        0.3 * pd.qcut(rfms_df['Frequency'], 5, labels=False, duplicates='drop') +  # Frequent transactions are better
+        0.2 * pd.qcut(rfms_df['Monetary'], 5, labels=False, duplicates='drop') +   # Higher monetary value is better
+        0.1 * pd.qcut(rfms_df['Seasonality'], 5, labels=False, duplicates='drop')  # More active seasons are better
+    )
+
+    # Classify based on RiskScore: High score = Good (low risk), Low score = Bad (high risk)
+    rfms_df['RiskCategory'] = rfms_df['RiskScore'].apply(lambda x: 'Good' if x > 2.5 else 'Bad')
+    return rfms_df
