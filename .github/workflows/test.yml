@@ -1,0 +1,16 @@
+name: To be done
+
+on: 
+  push:
+    branches: 
+      - main
+
+jobs:
+  print_string:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print a string
+        run: echo "Github Actions section is not done yet, I am working on it!"
