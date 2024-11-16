@@ -82,3 +82,33 @@ def calculate_woe_option(data, feature, target):
     )
 
     return woe_df[[feature, 'WoE']]
+
+def calculate_total_RFMS(data):
+    data['TransactionStartTime'] = pd.to_datetime(data['TransactionStartTime'])
+
+    # Calculate Recency (days since last transaction)
+    recency_df = data.groupby('CustomerId')['TransactionStartTime'].max().reset_index()
+    recency_df['Recency'] = (data['TransactionStartTime'].max() - recency_df['TransactionStartTime']).dt.days
+
+    # Calculate Frequency (number of transactions)
+    frequency_df = data.groupby('CustomerId')['TransactionId'].count().reset_index()
+    frequency_df.columns = ['CustomerId', 'Frequency']
+
+    # Calculate Monetary Value (total transaction amount)
+    monetary_df = data.groupby('CustomerId')['Amount'].sum().reset_index()
+    monetary_df.columns = ['CustomerId', 'Monetary']
+
+    # Merge RFMS data
+    rfms_df = recency_df.merge(frequency_df, on='CustomerId').merge(monetary_df, on='CustomerId')
+
+    # Normalize RFMS scores
+    rfms_df['RecencyScore'] = pd.qcut(rfms_df['Recency'], 4, labels=[4, 3, 2, 1])  # Lower recency is better
+    rfms_df['FrequencyScore'] = pd.qcut(rfms_df['Frequency'], 4, labels=[1, 2, 3, 4])  # Higher frequency is better
+    rfms_df['MonetaryScore'] = pd.qcut(rfms_df['Monetary'], 4, labels=[1, 2, 3, 4])  # Higher monetary is better
+
+    # Calculate Total RFMS Score
+    rfms_df['TotalRFMS'] = rfms_df['RecencyScore'].astype(int) + rfms_df['FrequencyScore'].astype(int) + rfms_df['MonetaryScore'].astype(int)
+
+    # Display RFMS DataFrame
+    print(rfms_df[['CustomerId', 'Recency', 'Frequency', 'Monetary', 'TotalRFMS']].head())
+    return rfms_df

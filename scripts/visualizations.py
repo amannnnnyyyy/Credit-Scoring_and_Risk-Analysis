@@ -129,3 +129,33 @@ def plot_confusion_matrix(cm):
     plt.ylabel('True')
     plt.title('Confusion Matrix - Random Forest')
     plt.show()
+
+def plot_risk_scores(data):
+    plt.hist(data['RiskScore'], bins=10, color='skyblue', edgecolor='black')
+    plt.title('Distribution of Risk Scores')
+    plt.xlabel('Risk Score')
+    plt.ylabel('Frequency')
+    plt.axvline(x=2, color='red', linestyle='--', label='Threshold = 2') 
+    plt.legend()
+    plt.show()
+
+def plot_risk_counts(risk_counts):
+    # Plot the classification results
+    risk_counts.plot(kind='bar', color=['green', 'red'], alpha=0.7)
+    plt.title('Risk Category Distribution')
+    plt.xlabel('Risk Category')
+    plt.ylabel('Number of Customers')
+    plt.xticks(rotation=0)
+    plt.show()
+
+def plot_RFMS(rfms_df):
+    plt.figure(figsize=(12, 8))
+    sns.scatterplot(data=rfms_df, x='Frequency', y='Monetary', size='TotalRFMS', sizes=(20, 200), alpha=0.6, hue='TotalRFMS', palette='viridis')
+
+    plt.title('RFMS Scatter Plot')
+    plt.xlabel('Frequency')
+    plt.ylabel('Monetary Value')
+    plt.axhline(y=rfms_df['Monetary'].median(), color='r', linestyle='--', label='Monetary Median')
+    plt.axvline(x=rfms_df['Frequency'].median(), color='b', linestyle='--', label='Frequency Median')
+    plt.legend()
+    plt.show()
