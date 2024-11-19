@@ -11,7 +11,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load the trained models using absolute paths
 models = {
 
     'gradient_boosting': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/gradient_boosting_model.pkl')),
@@ -92,27 +91,17 @@ class InputData(BaseModel):
     class Config:
         protected_namespaces = ()
 
-# Mount static files (like HTML)
 app.mount("/static", StaticFiles(directory="."), name="static")
 
 
-# Define the root route to serve the HTML form
-@app.get("/", response_class=HTMLResponse)
-async def read_form():
-    with open("index.html") as f:
-        return HTMLResponse(content=f.read())
 
-# Define the prediction endpoint
 @app.post('/predict')
 def predict(input_data: InputData):
-    # Check if the chosen model is available
     if input_data.model_name not in models:
         raise HTTPException(status_code=400, detail="Model not found")
 
-    # Convert input data to DataFrame
     input_df = pd.DataFrame([input_data.dict(exclude={"model_name"})])  # Exclude model_name for prediction
     
-    # Make predictions using the chosen model
     model = models[input_data.model_name]
     
     try:
