@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 def calculate_recency(df, customer_id_col, transaction_time_col):
     current_date = df[transaction_time_col].max()  # Latest date in the dataset
