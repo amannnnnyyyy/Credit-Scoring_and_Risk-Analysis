@@ -13,10 +13,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 models = {
 
-    'gradient_boosting': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/gradient_boosting_model.pkl')),
-    'logistic_regression': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/logistic_regression_model.pkl')),
-    'random_forest': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/random_forest_model.pkl')),
-    'decision_tree': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/decision_tree_model.pkl'))
+    'gradient_boosting': joblib.load(os.path.join(BASE_DIR, 'models/gradient_boosting_model.pkl')),
+    'logistic_regression': joblib.load(os.path.join(BASE_DIR, 'models/logistic_regression_model.pkl')),
+    'random_forest': joblib.load(os.path.join(BASE_DIR, 'models/random_forest_model.pkl')),
+    'decision_tree': joblib.load(os.path.join(BASE_DIR, 'models/decision_tree_model.pkl'))
 }
 
 # Create a FastAPI instance
