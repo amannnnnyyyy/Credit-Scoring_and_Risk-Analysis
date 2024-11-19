@@ -4,22 +4,37 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from fastapi.middleware.cors import CORSMiddleware
+
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load the trained models using absolute paths
 models = {
+
+    'gradient_boosting': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/gradient_boosting_model.pkl')),
     'logistic_regression': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/logistic_regression_model.pkl')),
     'random_forest': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/random_forest_model.pkl')),
-    'decision_tree': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/decision_tree_model.pkl')),
-    'gradient_boosting': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/gradient_boosting_model.pkl'))
+    'decision_tree': joblib.load(os.path.join(BASE_DIR, '../notebooks/model/decision_tree_model.pkl'))
 }
 
 # Create a FastAPI instance
 app = FastAPI()
 
-# Define the input data model based on your features
+origins = [
+    "http://localhost:3000",  # React app
+    "http://0.0.0.0:8000",    # Backend itself
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"], 
+)
 class InputData(BaseModel):
     TotalRFMS: float
     ProviderId_ProviderId_2: float
@@ -60,7 +75,6 @@ class InputData(BaseModel):
     ChannelId_ChannelId_2: float
     ChannelId_ChannelId_3: float
     ChannelId_ChannelId_5: float
-    CountryCode: float 
     Amount: float
     Value: float
     PricingStrategy: float
@@ -68,12 +82,15 @@ class InputData(BaseModel):
     Total_Transaction_Amount: float
     Average_Transaction_Amount: float
     Transaction_Count: float
-    Std_Deviation_Transaction_Amount: float
+    # Std_Deviation_Transaction_Amount: float
     Transaction_Hour: float
     Transaction_Day: float
     Transaction_Month: float
     Transaction_Year: float
     model_name: str 
+        
+    class Config:
+        protected_namespaces = ()
 
 # Mount static files (like HTML)
 app.mount("/static", StaticFiles(directory="."), name="static")
@@ -104,9 +121,9 @@ def predict(input_data: InputData):
 
         probab_perc = (f'{(probability[0]*100):.2f}')
         if prediction[0] == 1:
-            message = f"The customer is likely to default based on the provided information. Probability of default: {probab_perc}%."
+            message = probab_perc
         else:
-            message = f"The customer is not likely to default based on the provided information. Probability of default: {probab_perc}%."
+            message = probab_perc
 
         return {
             'model': input_data.model_name,

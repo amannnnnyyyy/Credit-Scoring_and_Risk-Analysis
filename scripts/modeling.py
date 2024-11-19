@@ -24,7 +24,7 @@ def prepare_for_model(data):
               'ProductId_ProductId_9', 'ProductCategory_data_bundles', 'ProductCategory_financial_services',
               'ProductCategory_movies', 'ProductCategory_other', 'ProductCategory_ticket',
               'ProductCategory_transport', 'ProductCategory_tv', 'ProductCategory_utility_bill',
-              'ChannelId_ChannelId_2', 'ChannelId_ChannelId_3', 'ChannelId_ChannelId_5', 'CountryCode',
+              'ChannelId_ChannelId_2', 'ChannelId_ChannelId_3', 'ChannelId_ChannelId_5',
               'Amount', 'Value', 'PricingStrategy', 'FraudResult', 'Total_Transaction_Amount',
               'Average_Transaction_Amount', 'Transaction_Count', 'Std_Deviation_Transaction_Amount', 'Transaction_Hour',
               'Transaction_Day', 'Transaction_Month', 'Transaction_Year']]
@@ -41,14 +41,19 @@ def prepare_for_model(data):
               'ProductId_ProductId_9', 'ProductCategory_data_bundles', 'ProductCategory_financial_services',
               'ProductCategory_movies', 'ProductCategory_other', 'ProductCategory_ticket',
               'ProductCategory_transport', 'ProductCategory_tv', 'ProductCategory_utility_bill',
-              'ChannelId_ChannelId_2', 'ChannelId_ChannelId_3', 'ChannelId_ChannelId_5', 'CountryCode',
+              'ChannelId_ChannelId_2', 'ChannelId_ChannelId_3', 'ChannelId_ChannelId_5',
               'Amount', 'Value', 'PricingStrategy', 'FraudResult', 'Total_Transaction_Amount',
               'Average_Transaction_Amount', 'Transaction_Count', 'Transaction_Hour',
               'Transaction_Day', 'Transaction_Month', 'Transaction_Year']]
     y = data['RiskCategory'].map({'Good': 0, 'Bad': 1})  # Binary mapping for classification
 
+
     # Split the dataset
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train.to_csv('../docs/X_train_data.csv')
+    y_train.to_csv('../docs/y_train_data.csv')
+    X_test.to_csv('../docs/X_test_data.csv')
+    y_test.to_csv('../docs/y_test_data.csv')
     return X_train, X_test, y_train, y_test, X, y
 
 
@@ -189,9 +194,9 @@ def tune_models(X_train, y_train, X_test, y_test, search_method='grid', n_iter=1
 
 def save_best_model(results,X_train, y_train, X_test, y_test):
     best_params = {
-        'subsample': 0.8,
-        'n_estimators': 200,
-        'max_depth': 5,
+        'subsample': 0.9,
+        'n_estimators': 500,
+        'max_depth': 7,
         'learning_rate': 0.1
     }
 

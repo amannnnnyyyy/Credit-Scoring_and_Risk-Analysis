@@ -27,6 +27,7 @@ def time_correction(data):
     data['Transaction_Day'] = data['TransactionStartTime'].dt.day
     data['Transaction_Month'] = data['TransactionStartTime'].dt.month
     data['Transaction_Year'] = data['TransactionStartTime'].dt.year
+    return data
 
 
 def one_hot_encoder(data):
@@ -108,13 +109,11 @@ def scaling(data):
 
 
 def Standardize(data,numerical_columns):
-    # Initialize StandardScaler
-    standard_scaler = StandardScaler()
-
-    # Apply standardization
-    df_standardized = data.copy()  # Create a copy to avoid modifying the original DataFrame
-    df_standardized[numerical_columns] = standard_scaler.fit_transform(data[numerical_columns])
-    return df_standardized
+    for col in numerical_columns:
+        min_val = data[col].min()
+        max_val = data[col].max()
+        data[col] = (data[col] - min_val) / (max_val - min_val)
+    return data
 
 def handle_missing_values(df):
     for col in df.select_dtypes(include=['float64', 'int64']):
