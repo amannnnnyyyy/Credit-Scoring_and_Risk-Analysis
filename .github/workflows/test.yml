@@ -1,16 +1,33 @@
-name: To be done
+name: CI/CD Pipeline
 
-on: 
+on:
   push:
-    branches: 
-      - main
+    branches:
+      - main 
 
 jobs:
-  print_string:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Print a string
-        run: echo "Github Actions section is not done yet, I am working on it!!"
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  
+        password: ${{ secrets.DOCKER_PASSWORD }} 
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: src/Dockerfile
+        push: true
+        tags: amannnnyyyy/bati-backend-app:${{ github.ref }}
+
+    - name: Logout from Docker Hub
+      run: docker logout
