@@ -43,9 +43,14 @@ The dataset used for this project is sourced from [Kaggle](https://www.kaggle.co
 
 To set up the project on your local machine, follow these steps:
 
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/amannnnnyyyy/Credit-Scoring_and_Risk-Analysis.git
    cd Credit-Scoring_and_Risk-Analysis
 
 2. pip install -r requirements.txt
+
+## Final Product
+
+[Click here to visit the site](https://bati-bank-frontend.onrender.com/)
