@@ -132,7 +132,7 @@ const App = () => {
 
 
     try {
-        const response = await fetch('https://bati-backend-app.onrender.com/predict', {
+        const response = await fetch('https://bati-backend-app-v1-1.onrender.com/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -277,7 +277,9 @@ const App = () => {
             >
               <option value={2}>2</option>
               <option value={3}>3</option>
+              <option value={4}>4</option>
               <option value={5}>5</option>
+              <option value={6}>6</option>
             </select>
 
             <label htmlFor='ProductId'>Product ID</label>

@@ -13,12 +13,12 @@ code {
 }
 
 body{
-  background: rgb(214,212,212);
+  background: rgb(241, 241, 241);
   text-align: center;
 }
 
 .container{
-  background-color: #fff;
+  background-color: rgb(31, 19, 8);
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0,0, 0,0.2);
   padding: 10px 20px;
@@ -30,6 +30,13 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background: rgba(255,255,255,0.5);
+  box-shadow: 0 8px 32px rgba(31, 38,135,0.37);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
 }
 
 .part {
@@ -53,7 +60,13 @@ body{
 h1{
   font-size: x-large;
   text-align: center;
-  color: #4206a3;
+  color: #ffffff;
+
+  background: rgba(5, 5, 5, 0.9);
+  box-shadow: 0 8px 32px rgba(31, 38,135,0.7);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  border: 1px solid rgba(5, 5, 5, 0.18);
 }
 
 label{
@@ -63,7 +76,7 @@ label{
   margin-top: 8px;
   margin-bottom: 5px;
   text-align: left;
-  color: #555;
+  color: rgb(3, 3, 3);
   font-weight: bold;
 }
 
@@ -170,9 +183,6 @@ button:hover{
 }
 
 
-css
-
-Copy
 .react-datepicker {
   position: relative;
 }
@@ -193,3 +203,4 @@ Copy
 .react-datepicker__input-container input {
   padding-left: 30px;
 }
+

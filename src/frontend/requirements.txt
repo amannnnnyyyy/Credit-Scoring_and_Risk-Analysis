@@ -1,0 +1,5 @@
+react
+react-dom
+react-datepicker
+chart.js
+react-chartjs-2
