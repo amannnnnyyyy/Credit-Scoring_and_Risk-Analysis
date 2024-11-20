@@ -27,7 +27,7 @@ jobs:
         context: .
         file: src/Dockerfile
         push: true
-        tags: amannnnyyyy/bati-backend-app:${{ github.ref }}
+        tags: amannnnyyyy/bati-backend-app:latest
 
     - name: Logout from Docker Hub
       run: docker logout
